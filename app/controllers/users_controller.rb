@@ -18,9 +18,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-       redirect_to @user
-       flash[:success] = "ユーザー登録が完了しました"
+      @user.send_activation_email
+      flash[:info] = "メールを確認して、アカウントを有効にしてください"
+      redirect_to root_url
     else
       render 'new'
     end
